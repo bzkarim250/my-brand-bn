@@ -2,14 +2,14 @@ import mongoose from "mongoose";
 import dotenv from "dotenv";
 
 dotenv.config();
-const dburl = process.env.DB_URL as string;
+const dburl: string = process.env.DB_URL as string;
 
-const connectDb = async () => {
+const connectDb = async (): Promise<void> => {
   try {
     await mongoose.connect(dburl);
-    console.log("Database connect successfully");
-  } catch (error: any) {
-    console.error({ error: error.message });
+    console.log("Database connected successfully");
+  } catch (error) {
+    console.error({ error: (error as Error).message });
   }
 };
 
