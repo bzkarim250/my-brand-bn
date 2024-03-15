@@ -1,12 +1,19 @@
 import { Request, Response } from "express";
 import BlogServices from "../database/services/blogService";
-import response from "../helpers/response"; // Corrected import statement
-
+import response from "../helpers/response";
+import cloudinary from "../helpers/cloudinary";
 class BlogController {
   static async createBlog(req: Request, res: Response): Promise<void> {
     try {
+      let postLink: string|undefined;
+      if (req.file !== undefined) {
+        const file = req.file.path;
+        const link = await cloudinary.uploader.upload(file);
+        postLink = link.secure_url;
+      }
       const { title, description } = req.body;
-      // const { id } = req.user.id;
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const authorId = (req as any).user?.id;
       const blogExists = await BlogServices.getSingleBlog(title);
       if (blogExists) {
         response(res, 409, "Blog already exists", null, "BLOG_EXISTS");
@@ -16,7 +23,8 @@ class BlogController {
       const blog = await BlogServices.createBlog({
         title,
         description,
-        author:"",
+        imageURL: postLink,
+        author: authorId,
       });
       response(res, 201, "Blog created", blog);
     } catch (error) {

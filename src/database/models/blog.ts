@@ -6,7 +6,7 @@ interface IBlog extends Document {
   description: string;
   likes?: number;
   comments?: Types.ObjectId[];
-  // author: Types.ObjectId;
+  author: Types.ObjectId;
 }
 
 const BlogSchema: Schema = new Schema({
@@ -15,7 +15,7 @@ const BlogSchema: Schema = new Schema({
   description: { type: String, required: true },
   likes: { type: Number, default: 0 },
   comments: [{ type: Schema.Types.ObjectId, ref: "Comment" }],
-  // author: { type: Schema.Types.ObjectId, ref: "User", required: true },
+  author: { type: Schema.Types.ObjectId, ref: "User", required: true },
 });
 
 const Blog = model<IBlog>('Blog', BlogSchema);

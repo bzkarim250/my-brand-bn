@@ -2,7 +2,7 @@ import { IBlog, Blog } from "../models/blog";
 
 class BlogServices {
   static async getAllBlogs() {
-    const blogs = await Blog.find()  //.populate("author","name email");
+    const blogs = await Blog.find().populate("author","fullname email -_id");
     return blogs;
   }
 
@@ -10,7 +10,7 @@ class BlogServices {
     const blog = await Blog.findOne({ title: query });
     return blog;
   }
-  static async createBlog(blogData: { title: string; description: string; author: string }): Promise<IBlog> {
+  static async createBlog(blogData: { title: string; description: string; author: string,imageURL:string|undefined }): Promise<IBlog> {
     const blog = await Blog.create(blogData);
     return blog;
   }
