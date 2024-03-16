@@ -1,4 +1,4 @@
-import mongoose, { Schema, Document, Types } from 'mongoose';
+import mongoose, { Schema, Document, Types } from "mongoose";
 
 interface IComment extends Document {
   content: string;
@@ -8,10 +8,10 @@ interface IComment extends Document {
 
 const CommentSchema: Schema = new Schema({
   content: { type: String, required: true },
-  user: { type: Schema.Types.ObjectId, ref: 'User', required: true },
-  blog: { type: Schema.Types.ObjectId, ref: 'Blog', required: true }
+  user: { type: Schema.Types.ObjectId, ref: "User", required: true },
+  blog: { type: Schema.Types.ObjectId, ref: "Blog", required: true },
 });
 
-const Comment = mongoose.model<IComment>('Comment', CommentSchema);
+const Comment = mongoose.model<IComment>("Comment", CommentSchema);
 
-export default Comment;
+export { Comment, IComment };

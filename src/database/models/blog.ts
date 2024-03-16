@@ -1,4 +1,4 @@
-import { Schema, Document, Types,model } from "mongoose";
+import { Schema, Document, Types, model } from "mongoose";
 
 interface IBlog extends Document {
   title: string;
@@ -17,6 +17,11 @@ const BlogSchema: Schema = new Schema({
   comments: [{ type: Schema.Types.ObjectId, ref: "Comment" }],
   author: { type: Schema.Types.ObjectId, ref: "User", required: true },
 });
+
+BlogSchema.methods.addComment = function (commentId: Types.ObjectId): Promise<IBlog> {
+  this.comments.push(commentId);
+  return this.save();
+};
 
 const Blog = model<IBlog>('Blog', BlogSchema);
 
