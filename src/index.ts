@@ -4,6 +4,7 @@ import cors from "cors";
 
 import connectDb from "./database/db";
 import route from "./routes/index";
+import swaggerDocs from "./api-docs/swagger";
 
 connectDb();
 const app: Application = express();
@@ -16,5 +17,6 @@ const server: Server = app.listen(port, () => {
 });
 
 app.use("/api", route);
+swaggerDocs(app);
 
 export default server;
