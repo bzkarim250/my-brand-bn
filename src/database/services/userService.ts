@@ -1,4 +1,4 @@
-import { IUser,User } from "../models/user";
+import { IUser, User } from "../models/user";
 
 type QueryType = { $or: [{ username: string }, { email: string }] };
 
@@ -10,6 +10,10 @@ class UserServices {
 
   static async userSignup(userData: IUser): Promise<IUser> {
     const user = await User.create(userData);
+    return user;
+  }
+  static async getUserById(userId: string): Promise<IUser | null> {
+    const user = await User.findById(userId);
     return user;
   }
 }
