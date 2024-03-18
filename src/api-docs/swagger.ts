@@ -18,7 +18,11 @@ const options: swaggerJSDoc.Options = {
       },
       {
         url: 'https://real-helmet-foal.cyclic.app',
-        description: 'Production server',
+        description: 'Production server Cyclic',
+      },
+      {
+        url: 'https://my-brand-bn-tsud.onrender.com',
+        description: 'Production server Render',
       },
     ],
     tags: [
