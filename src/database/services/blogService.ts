@@ -49,6 +49,10 @@ class BlogServices {
     blog.comments!.push(commentId);
     await blog.save();
   }
+  static async incrementLikes(blogId: string): Promise<IBlog | null> {
+    const blog = await Blog.findByIdAndUpdate(blogId, { $inc: { likes: 1 } }, { new: true });
+    return blog;
+  }
 }
 
 export default BlogServices;
