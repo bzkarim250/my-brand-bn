@@ -1,16 +1,20 @@
-import { Request, Response, NextFunction } from "express";
+import { Request, Response, NextFunction, RequestHandler } from "express";
 import { verify } from "../helpers/jwt";
 import response from "../helpers/response";
 
-interface DecodedUser {
+export interface DecodedUser {
   role: string;
   id: string;
   username: string;
   email: string;
 }
 
-export const isAdmin = async (
-  req: Request & { user?: DecodedUser },
+export interface CustomeRequest extends Request {
+  user?: DecodedUser;
+}
+
+export const isAdmin: RequestHandler = async (
+  req: CustomeRequest,
   res: Response,
   next: NextFunction
 ): Promise<void> => {
@@ -44,8 +48,8 @@ export const isAdmin = async (
   }
 };
 
-export const isUser = async (
-  req: Request & { user?: DecodedUser },
+export const isUser: RequestHandler = async (
+  req: CustomeRequest,
   res: Response,
   next: NextFunction
 ): Promise<void> => {
@@ -78,8 +82,8 @@ export const isUser = async (
   }
 };
 
-export const isUserOrAdmin = async (
-  req: Request & { user?: DecodedUser },
+export const isUserOrAdmin: RequestHandler = async (
+  req: CustomeRequest,
   res: Response,
   next: NextFunction
 ): Promise<void> => {

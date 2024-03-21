@@ -1,12 +1,13 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Request, Response } from "express";
 import BlogServices from "../database/services/blogService";
 import UserServices from "../database/services/userService";
 import response from "../helpers/response";
 import cloudinary from "../helpers/cloudinary";
 import { Types } from "mongoose";
+import { CustomeRequest } from "../middlewares/auth";
+
 class BlogController {
-  static async createBlog(req: Request, res: Response): Promise<void> {
+  static async createBlog(req: CustomeRequest, res: Response): Promise<void> {
     try {
       let postLink: string | undefined;
       if (req.file !== undefined) {
@@ -15,7 +16,7 @@ class BlogController {
         postLink = link.secure_url;
       }
       const { title, description } = req.body;
-      const authorId = (req as any).user?.id;
+      const authorId = req.user?.id as string;
       const blogExists = await BlogServices.getSingleBlog(title);
       if (blogExists) {
         response(res, 409, "Blog already exists", null, "BLOG_EXISTS");
@@ -121,11 +122,11 @@ class BlogController {
       );
     }
   }
-  static async likeBlog(req: Request, res: Response): Promise<void> {
+  static async likeBlog(req: CustomeRequest, res: Response): Promise<void> {
     try {
       const { blogId } = req.params;
       const blogObjectId = new Types.ObjectId(blogId);
-      const userId = (req as any).user?.id;
+      const userId = req.user?.id as string;
       const user = await UserServices.getUserById(userId);
       if (!user) {
         response(res, 404, "User not found", null, "USER_NOT_FOUND");
