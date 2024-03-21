@@ -2,6 +2,7 @@ import swaggerJSDoc from 'swagger-jsdoc';
 import swaggerUi from 'swagger-ui-express';
 import { Router } from 'express';
 import { userRouteDocs } from './user.docs';
+import { blogRouteDocs } from './blog.docs';
 
 const options: swaggerJSDoc.Options = {
   definition: {
@@ -16,13 +17,18 @@ const options: swaggerJSDoc.Options = {
         url: 'http://localhost:5000',
         description: 'Development server',
       },
+      // {
+      //   url: 'https://real-helmet-foal.cyclic.app',
+      //   description: 'Production server Cyclic',
+      // },
       {
-        url: 'https://real-helmet-foal.cyclic.app',
-        description: 'Production server',
+        url: 'https://my-brand-bn-tsud.onrender.com',
+        description: 'Production server Render',
       },
     ],
     tags: [
       { name: 'User', description: 'User End-points' },
+      { name: 'Blog', description: 'Blog End-points' },
     ],
     components: {
       securitySchemes: {
@@ -194,6 +200,7 @@ const options: swaggerJSDoc.Options = {
 
     paths: {
       ...userRouteDocs,
+      ...blogRouteDocs,
     },
   },
   apis: ['../routes/**/*.ts'],
