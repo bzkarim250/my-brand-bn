@@ -1,5 +1,11 @@
 # My Brand API
-This documentation will work you through my portifolio api (my-brand-bn) installation and setup.
+
+![build](https://github.com/bzkarim250/my-brand-bn/actions/workflows/actions.yml/badge.svg?event=push)
+[![Reviewed by Hound](https://img.shields.io/badge/Reviewed_by-Hound-8E64B0.svg)](https://houndci.com)
+[![Coverage Status](https://coveralls.io/repos/github/bzkarim250/my-brand-bn/badge.svg?branch=test-all-endpoints)](https://coveralls.io/github/bzkarim250/my-brand-bn?branch=test-all-endpoints)
+
+
+This documentation will work you through my portfolio API (my-brand-bn) installation and setup.
 
 ## CONTENT
 ---
@@ -10,38 +16,19 @@ This documentation will work you through my portifolio api (my-brand-bn) install
   * [Setting environment variables](#environment-variables)
   * [Scripts to work with](#scripts)
 
-
-
 ## Overview
 ---
-> My brand api is backend for my portifolio.
-
+> My brand API is the backend for my portfolio.
 
 ## Technologies
 ---
-- Language:Typescript
+- Language: TypeScript
 - Package Manager: npm
-- Library:NodeJs
-- Framework:Express
-- Database:MongoDB
+- Library: Node.js
+- Framework: Express
+- Database: MongoDB
 
 ## Installation
 ---
->bash
-`git clone https://github.com/bzkarim250/my-brand-bn.git`
-
-### dependency-installation
-
->bash
-`npm install`
-
-### environment-variables
->Create a .env in the root directory 
->paste all the environment variables as they appear on .env.example file
->Fill out .env accordingly
-
-
-### scripts
-
-bash
-starting server: `npm run dev`
+```bash
+git clone https://github.com/bzkarim250/my-brand-bn.git
