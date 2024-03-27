@@ -22,21 +22,4 @@ const connectDb = async (): Promise<void> => {
   }
 };
 
-const disconnectDb = async (): Promise<void> => {
-  try {
-    await mongoose.disconnect();
-    console.log("Database disconnected successfully!");
-  } catch (error) {
-    console.error({ error: (error as Error).message });
-  }
-};
-
-const dropDatabase = async (): Promise<void> => {
-  try {
-    await mongoose.connection.dropDatabase();
-  } catch (error) {
-    console.error({ error: (error as Error).message });
-  }
-};
-
-export { connectDb, disconnectDb, dropDatabase };
+export { connectDb};

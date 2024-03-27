@@ -44,6 +44,18 @@ describe("POST /api/blog", () => {
     expect(res.body.data).toBeDefined();
     blogID = res.body.data._id;
   });
+  test("should not create duplicate", async () => {
+    const res = await request
+      .post("/api/blog/create")
+      .set("Authorization", `Bearer ${token}`)
+      .send({
+        title: "Test Blog",
+        author: userId,
+        description: "This is a test blog post",
+      });
+    expect(res.statusCode).toBe(409);
+    expect(res.body.message).toBe("Blog already exists");
+  });
 });
 
 describe("GET /api/blog/:blogId", () => {
@@ -88,6 +100,17 @@ describe("PATCH /api/blog/update/:blogId", () => {
     expect(res.body.message).toBe("Blog updated successfully");
     expect(res.body.data).toBeDefined();
   });
+  test("should not update a non-existing blog", async () => {
+    const res = await request
+      .patch(`/api/blog/update/65f3134a494934b10177c062`)
+      .set("Authorization", `Bearer ${token}`)
+      .send({
+        title: "Update Title",
+        description: "Update the description",
+      });
+    expect(res.statusCode).toBe(404);
+    expect(res.body.message).toBe("Blog not found");
+  });
 });
 
 describe("PATCH /api/blog/like/:blogId", () => {
@@ -106,6 +129,13 @@ describe("PATCH /api/blog/like/:blogId", () => {
     expect(res.statusCode).toBe(400);
     expect(res.body.message).toBe("You have already liked this blog");
   });
+  test("should not like a non-existing blog", async () => {
+    const res = await request
+      .patch(`/api/blog/like/65f3134a494934b10177c062`)
+      .set("Authorization", `Bearer ${token}`);
+    expect(res.statusCode).toBe(404);
+    expect(res.body.message).toBe("Blog not found");
+  });
 });
 
 describe("POST /api/comment/add/:blogId", () => {
@@ -120,6 +150,16 @@ describe("POST /api/comment/add/:blogId", () => {
     expect(res.body.message).toBe("Comment added successfully");
     expect(res.body.data).toBeDefined();
   });
+  test("should not comment to a non-existing blog", async () => {
+    const res = await request
+      .post(`/api/comment/add/65f3134a494934b10177c062`)
+      .set("Authorization", `Bearer ${token}`)
+      .send({
+        content: " Thanks this is very informative",
+      });
+    expect(res.statusCode).toBe(404);
+    expect(res.body.message).toBe("Blog not found");
+  });
 });
 
 describe("DELETE /api/blog/delete/:blogId", () => {
@@ -130,5 +170,12 @@ describe("DELETE /api/blog/delete/:blogId", () => {
     expect(res.statusCode).toBe(200);
     expect(res.body.message).toBe("Blog deleted successfully");
     expect(res.body.data).toBeDefined();
+  });
+  test("should not delete a non-existing blog", async () => {
+    const res = await request
+      .delete(`/api/blog/delete/${blogID}`)
+      .set("Authorization", `Bearer ${token}`);
+    expect(res.statusCode).toBe(404);
+    expect(res.body.message).toBe("Blog not found");
   });
 });
