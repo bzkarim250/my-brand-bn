@@ -3,6 +3,7 @@ import swaggerUi from 'swagger-ui-express';
 import { Router } from 'express';
 import { userRouteDocs } from './user.docs';
 import { blogRouteDocs } from './blog.docs';
+import { messageRouteDocs } from './message.docs';
 
 const options: swaggerJSDoc.Options = {
   definition: {
@@ -201,6 +202,7 @@ const options: swaggerJSDoc.Options = {
     paths: {
       ...userRouteDocs,
       ...blogRouteDocs,
+      ...messageRouteDocs,
     },
   },
   apis: ['../routes/**/*.ts'],
